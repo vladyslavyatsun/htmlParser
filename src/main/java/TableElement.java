@@ -22,11 +22,12 @@ public class TableElement {
 
         Elements options = cols.get(1).select("option");
 
-        Pattern pattern = Pattern.compile("^(id|name)=.*");
+        Pattern pattern = Pattern.compile("(id|name)=([a-z0-9._%+-]+|'[a-z0-9._%+-]+')");
 
         for (Element option : options) {
-            if (pattern.matcher(option.text()).matches()) {
-                attributes.add(option.text());
+            Matcher matcher = pattern.matcher(option.text());
+            if (matcher.find()) {
+                attributes.add(matcher.group());
             }
         }
     }
